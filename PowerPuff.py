@@ -21,7 +21,7 @@ font_path = r"MemoryGame\assets\BigBlue_Terminal_v1.0\BigBlue_Terminal_437TT.TTF
 font = pygame.font.Font(font_path,30)
 
 running = intro.show_intro()
-interested = [1,1,1,1]
+interested = [0,0,0,0]
 current_screen = "mc_room"
 while running:
     if current_screen == "mc_room":
