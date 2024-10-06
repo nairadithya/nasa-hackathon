@@ -89,6 +89,8 @@ class MCroom:
                 if event.key == pygame.K_SPACE and approaching_door:
                     if approaching_door == "door1":
                         return "memory_game"
+                    if approaching_door == "door2":
+                        return "pong_game"
                     print(f"Interacting with {approaching_door}")  # You can replace this with state change
 
         screen.fill((0, 0, 0))  
@@ -98,6 +100,27 @@ class MCroom:
         pygame.draw.rect(screen, (255, 255, 255), door1_rect)  # Door 1
         pygame.draw.rect(screen, (255, 255, 255), door2_rect)  # Door 2
         pygame.draw.rect(screen, (255, 255, 255), door3_rect)  # Door 3
+
+        #show three stats: sanity, electricity and food
+        if interesed[0] == 1:
+            text_surface1 = self.font.render("Sanity: 100%", True, (255, 255, 255))
+            screen.blit(text_surface1, (150, 10))
+        else:
+            text_surface1 = self.font.render("Sanity: 0%", True, (255, 255, 255))
+            screen.blit(text_surface1, (150, 10))
+        if interesed[1] == 1:
+            text_surface2 = self.font.render("Electricity: 100%", True, (255, 255, 255))
+            screen.blit(text_surface2, (500, 10))
+        else:
+            text_surface2 = self.font.render("Electricity: 0%", True, (255, 255, 255))
+            screen.blit(text_surface2, (500, 10))
+
+        if interesed[2] == 1:
+            text_surface3 = self.font.render("Food: 100%", True, (255, 255, 255))
+            screen.blit(text_surface3, (950, 10))
+        else:
+            text_surface3 = self.font.render("Food: 0%", True, (255, 255, 255))
+            screen.blit(text_surface3, (950, 10))
 
         # Draw player character
         screen.blit(mc_image, mc_rect.topleft)
