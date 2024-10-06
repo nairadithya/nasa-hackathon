@@ -64,7 +64,7 @@ class Turret:
 
 turret = Turret(pygame.Vector2(game_frame_width / 2, game_frame_height - 50))
 
-# Star generation
+# Bullet and Asteroid settings
 BULLET_SPEED = 400
 bullets = []
 bullet_cooldown = 0.5
@@ -213,66 +213,4 @@ while running:
             if try_again_button.collidepoint(event.pos):
                 reset_game()
 
-    if game_state == PLAYING:
-        elapsed_time = (pygame.time.get_ticks() - start_time) / 1000
-        remaining_time = max(0, game_duration - elapsed_time)
-        pygame.draw.rect(screen, "white", game_frame_rect.inflate(20, 20), 5)
-
-        if remaining_time <= 0:
-            game_state = WIN
-        elif asteroid_hit_count >= 10:
-            game_state = LOSE
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
-            turret.rotate(-2 * dt * math.pi)
-        if keys[pygame.K_d]:
-            turret.rotate(2 * dt * math.pi)
-
-        if keys[pygame.K_SPACE] and (pygame.time.get_ticks() / 1000 - last_shot_time) > bullet_cooldown:
-            bullets.append(Bullet(turret.pos, turret.angle))
-            last_shot_time = pygame.time.get_ticks() / 1000
-
-        turret.draw(game_frame)
-
-        bullets = [bullet for bullet in bullets if 0 <= bullet.pos.x <= game_frame_width and 0 <= bullet.pos.y <= game_frame_height]
-        for bullet in bullets:
-            bullet.update(dt)
-            bullet.draw(game_frame)
-
-        if random.random() < 0.02:
-            asteroids.append(Asteroid())
-
-        handle_asteroid_collisions()
-
-        for bullet in bullets[:]:
-            for asteroid in asteroids[:]:
-                if check_collision(bullet, asteroid):
-                    bullets.remove(bullet)
-                    asteroids.remove(asteroid)
-                    break
-
-        for asteroid in asteroids[:]:
-            if check_turret_collision(asteroid):
-                turret_hit = True
-            elif (asteroid.pos.y > game_frame_height + asteroid.radius or 
-                  asteroid.pos.x < -asteroid.radius or 
-                  asteroid.pos.x > game_frame_width + asteroid.radius):
-                asteroids.remove(asteroid)
-                asteroid_hit_count += 1
-            else:
-                asteroid.update(dt)
-                asteroid.draw(game_frame)
-
-        draw_timer_and_hits(remaining_time, asteroid_hit_count)
-        screen.blit(game_frame, game_frame_rect.topleft)
-
-    elif game_state == WIN:
-        draw_win_screen()
-    elif game_state == LOSE:
-        try_again_button = draw_lose_screen()
-
-    pygame.display.flip()
-    dt = clock.tick(60) / 1000
-
-pygame.quit()
+    if game_state == PLAYING
