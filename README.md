@@ -26,4 +26,4 @@ Tools Used
 
 We wrote the program in python with the PyGame library and a pixel art creation tool to create the sprites.
 
-[[Powerpuff Presentation.mp4]]
+![Powerpuff Presentation.mp4](./Powerpuff%20Presentation.mp4)
