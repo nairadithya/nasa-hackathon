@@ -3,6 +3,7 @@ import math
 import random
 import os
 
+# Initialize pygame
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
@@ -44,27 +45,23 @@ class Turret:
         self.pos = pos
         self.angle = 0
         self.base_sprite = pygame.transform.scale(turret_base_sprite, (TURRET_RADIUS * 2, TURRET_RADIUS * 2))
-        self.gun_sprite = pygame.transform.scale(turret_gun_sprite, (TURRET_LENGTH, 20))  # Increased width for visibility
+        self.gun_sprite = pygame.transform.scale(turret_gun_sprite, (TURRET_LENGTH, 20))
 
     def rotate(self, angle):
         self.angle += angle
 
     def draw(self, surface):
-        # Draw base
+        # Draw base and rotating gun
         base_rect = self.base_sprite.get_rect(center=self.pos)
         surface.blit(self.base_sprite, base_rect)
-        
-        # Draw rotating gun
         rotated_gun = pygame.transform.rotate(self.gun_sprite, -math.degrees(self.angle))
         gun_rect = rotated_gun.get_rect(center=self.pos)
         surface.blit(rotated_gun, gun_rect)
-
-        # Draw a bright outline around the turret for better visibility
         pygame.draw.circle(surface, (255, 255, 255), self.pos, TURRET_RADIUS + 2, 2)
 
 turret = Turret(pygame.Vector2(game_frame_width / 2, game_frame_height - 50))
 
-# Star generation
+# Game settings
 BULLET_SPEED = 400
 bullets = []
 bullet_cooldown = 0.5
@@ -75,10 +72,10 @@ asteroids = []
 asteroid_hit_count = 0
 turret_hit = False
 
-# Timer settings
 game_duration = 30
 start_time = pygame.time.get_ticks()
 
+# Font settings
 font_path = "assets/BigBlue_Terminal_437TT.TTF"
 font = pygame.font.Font(font_path, 40)
 large_font = pygame.font.Font(font_path, 60)
@@ -101,47 +98,30 @@ class Asteroid:
         self.sprite = pygame.transform.scale(asteroid_sprite, (self.radius * 2, self.radius * 2))
         self.speed = random.uniform(ASTEROID_MIN_SPEED, ASTEROID_MAX_SPEED)
         self.pos, self.angle = self.spawn_from_edge()
-        self.rotate_speed = random.uniform(-1, 1)
-        self.alpha = 255  # Full opacity
-        self.fade_speed = random.uniform(2, 5)  # Speed of fading in/out
-        self.fading_in = True
 
     def spawn_from_edge(self):
         edge = random.choice(['top', 'left', 'right'])
         if edge == 'top':
-            x = random.randint(0, game_frame_width)
-            y = -self.radius * 2  # Spawn further away from the top edge
+            x = random.randint(self.radius, game_frame_width - self.radius)
+            y = -self.radius
             angle = random.uniform(math.pi / 4, 3 * math.pi / 4)
         elif edge == 'left':
-            x = -self.radius * 2  # Spawn further away from the left edge
-            y = random.randint(0, game_frame_height)
+            x = -self.radius
+            y = random.randint(self.radius, game_frame_height - self.radius)  
             angle = random.uniform(-math.pi / 4, math.pi / 4)
-        else:  # Right edge
-            x = game_frame_width + self.radius * 2  # Spawn further away from the right edge
-            y = random.randint(0, game_frame_height)
+        else: 
+            x = game_frame_width + self.radius
+            y = random.randint(self.radius, game_frame_height - self.radius)
             angle = random.uniform(3 * math.pi / 4, 5 * math.pi / 4)
         return pygame.Vector2(x, y), angle
 
     def update(self, dt):
         self.pos.x += math.cos(self.angle) * self.speed * dt
         self.pos.y += math.sin(self.angle) * self.speed * dt
-        self.sprite = pygame.transform.rotate(self.sprite, self.rotate_speed)
-
-        # Update opacity
-        if self.fading_in:
-            self.alpha = min(255, self.alpha + self.fade_speed)
-            if self.alpha == 255:
-                self.fading_in = False
-        else:
-            self.alpha = max(0, self.alpha - self.fade_speed)
-            if self.alpha == 0:
-                self.fading_in = True
 
     def draw(self, surface):
-        sprite_copy = self.sprite.copy()
-        sprite_copy.set_alpha(self.alpha)
-        rect = sprite_copy.get_rect(center=(int(self.pos.x), int(self.pos.y)))
-        surface.blit(sprite_copy, rect)
+        rect = self.sprite.get_rect(center=(int(self.pos.x), int(self.pos.y)))
+        surface.blit(self.sprite, rect)
 
     def collides_with(self, other):
         return self.pos.distance_to(other.pos) < (self.radius + other.radius)
@@ -154,7 +134,7 @@ def check_turret_collision(asteroid):
 
 def handle_asteroid_collisions():
     for i, asteroid1 in enumerate(asteroids):
-        for asteroid2 in asteroids[i+1:]:
+        for asteroid2 in asteroids[i + 1:]:
             if asteroid1.collides_with(asteroid2):
                 asteroid1.angle, asteroid2.angle = asteroid2.angle, asteroid1.angle
                 overlap = asteroid1.radius + asteroid2.radius - asteroid1.pos.distance_to(asteroid2.pos)
@@ -200,6 +180,7 @@ def reset_game():
 stars = [(random.randint((game_frame_width - 800) // 2, (game_frame_width + 800) // 2),
           random.randint(0, game_frame_height)) for _ in range(200)]
 
+# Main Game Loop
 while running:
     screen.fill("black")
     game_frame.fill("black")
@@ -235,6 +216,7 @@ while running:
 
         turret.draw(game_frame)
 
+        # Bullet and asteroid updates
         bullets = [bullet for bullet in bullets if 0 <= bullet.pos.x <= game_frame_width and 0 <= bullet.pos.y <= game_frame_height]
         for bullet in bullets:
             bullet.update(dt)
@@ -245,6 +227,7 @@ while running:
 
         handle_asteroid_collisions()
 
+        # Collision handling and asteroid removal
         for bullet in bullets[:]:
             for asteroid in asteroids[:]:
                 if check_collision(bullet, asteroid):
@@ -252,14 +235,15 @@ while running:
                     asteroids.remove(asteroid)
                     break
 
+        
         for asteroid in asteroids[:]:
             if check_turret_collision(asteroid):
                 turret_hit = True
-            elif (asteroid.pos.y > game_frame_height + asteroid.radius or 
-                  asteroid.pos.x < -asteroid.radius or 
-                  asteroid.pos.x > game_frame_width + asteroid.radius):
+            elif asteroid.pos.y > game_frame_height + asteroid.radius:  # If it goes past the bottom
                 asteroids.remove(asteroid)
-                asteroid_hit_count += 1
+                asteroid_hit_count += 1  # Increment the count here
+            elif asteroid.pos.x < -asteroid.radius or asteroid.pos.x > game_frame_width + asteroid.radius:
+                asteroids.remove(asteroid)
             else:
                 asteroid.update(dt)
                 asteroid.draw(game_frame)
