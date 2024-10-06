@@ -6,9 +6,6 @@ Linear level based system, objectives,
 3. Fuel
 4. Oxygen
 
-# Objectives
-1. 
-
 # Inspirations
 1. Dead Space(for overall game design)
 2. Undertale (for aesthetic)
