@@ -56,7 +56,7 @@ class Pong:
         self.ball_dy *= random.choice((1, -1))
 
     def display_win_message(self):
-        win_message = "YOU WIN YAY !!! but alien is sad :((("
+        win_message = "Congrats :) You retrieved your fuel from the aliens!"
         win_text = self.font.render(win_message, True, self.WHITE)
         self.screen.fill(self.BLACK)  # Clear the screen
         self.screen.blit(win_text, (self.SCREEN_WIDTH // 8, self.SCREEN_HEIGHT // 2 - 40))  # Center message

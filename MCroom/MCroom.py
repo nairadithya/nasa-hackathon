@@ -91,7 +91,8 @@ class MCroom:
                         return "memory_game"
                     if approaching_door == "door2":
                         return "pong_game"
-                    print(f"Interacting with {approaching_door}")  # You can replace this with state change
+                    if approaching_door == "door3":
+                        return "connect_wires_games"
 
         screen.fill((0, 0, 0))  
         pygame.draw.rect(screen, (255, 255, 255), (50, 50, 1180, 620), 5)  # Room border
@@ -127,7 +128,14 @@ class MCroom:
 
         # Display approaching door text
         if approaching_door:
-            text_surface = self.font.render(f"Press SPACE to enter {approaching_door}", True, (255, 255, 255))
-            screen.blit(text_surface, (50, 680))
+            if approaching_door == "door1":
+                text_surface = self.font.render(f"Press SPACE to enter Memory Game", True, (255, 255, 255))
+                screen.blit(text_surface, (50, 680))
+            if approaching_door == "door2":
+                text_surface = self.font.render(f"Press SPACE to enter Power Room", True, (255, 255, 255))
+                screen.blit(text_surface, (50, 680))
+            if approaching_door == "door3":
+                text_surface = self.font.render(f"Press SPACE to enter Fuel Reserve", True, (255, 255, 255))
+                screen.blit(text_surface, (50, 680))
 
         return True

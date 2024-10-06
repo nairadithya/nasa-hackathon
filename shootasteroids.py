@@ -76,9 +76,9 @@ def shoot_asteroids_game(screen):
     start_time = pygame.time.get_ticks()
 
     # Font settings
-    font_path = "assets/BigBlue_Terminal_437TT.TTF"
+    font_path = "BigBlue_Terminal_437TT.TTF"
     font = pygame.font.Font(font_path, 40)
-    large_font = pygame.font.Font(font_path, 60)
+    large_font = pygame.font.Font(font_path, 40)
 
     class Bullet:
         def __init__(self, pos, angle):
@@ -149,7 +149,7 @@ def shoot_asteroids_game(screen):
         screen.blit(hit_text, (10, 20))
 
     def draw_win_screen():
-        win_text = large_font.render("You Win!!!", True, (0, 255, 0))
+        win_text = large_font.render("You protected the station from aliens :))", True, (0, 255, 0))
         screen.blit(win_text, win_text.get_rect(center=(640, 360)))
 
     def draw_lose_screen():
@@ -205,9 +205,9 @@ def shoot_asteroids_game(screen):
                 game_state = LOSE
 
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_a]:
+            if keys[pygame.K_LEFT]:
                 turret.rotate(-2 * dt * math.pi)
-            if keys[pygame.K_d]:
+            if keys[pygame.K_RIGHT]:
                 turret.rotate(2 * dt * math.pi)
 
             if keys[pygame.K_SPACE] and (pygame.time.get_ticks() / 1000 - last_shot_time) > bullet_cooldown:
@@ -253,6 +253,9 @@ def shoot_asteroids_game(screen):
 
         elif game_state == WIN:
             draw_win_screen()
+            pygame.display.flip()
+            pygame.time.delay(2000)
+            return "final"
         elif game_state == LOSE:
             try_again_button = draw_lose_screen()
 
@@ -260,4 +263,4 @@ def shoot_asteroids_game(screen):
         dt = clock.tick(60) / 1000
 
     pygame.quit()
-    return "mc_room"
+    return "final"

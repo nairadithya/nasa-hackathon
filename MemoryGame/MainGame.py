@@ -163,7 +163,7 @@ class MemoryGameScreen:
         self.font = pygame.font.Font(self.font_path, 40)
         self.text1 = self.font.render("Congratulations !!", True, (255, 255, 255))
         self.text2 = self.font.render("You are now sane :)", True, (255, 255, 255))
-        self.text3 = self.font.render("Ysour mental health is now optimum !!", True, (255, 255, 255))
+        self.text3 = self.font.render("Your mental health is now optimum !!", True, (255, 255, 255))
         self.game_over = False
 
     def memory_game_logic(self):
