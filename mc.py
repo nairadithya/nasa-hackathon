@@ -20,14 +20,15 @@ pygame.display.set_caption("PowerPuff")
 # Create an instance of MCroom
 mc = m.MCroom()
 intro = m.IntroScreen(screen)
-
+font_path = r"MemoryGame\assets\BigBlue_Terminal_v1.0\BigBlue_Terminal_437TT.TTF"
+font = pygame.font.Font(font_path,30)
 
 running = intro.show_intro()
-
+interested = [0,0,0,0]
 current_screen = "mc_room"
 while running:
     if current_screen == "mc_room":
-        result = mc.mc_room_logic(screen)
+        result = mc.mc_room_logic(screen, interested)
         if result == "memory_game":
             current_screen = "memory_game"
         else:
@@ -37,6 +38,7 @@ while running:
         running = memory_game_screen.memory_game_logic()
         #delay 5 seconds
         current_screen = "mc_room"
+        interested[0] = 1
     pygame.display.flip()
 
 pygame.quit() 

@@ -47,7 +47,7 @@ class MCroom:
         self.font_path = r"MemoryGame\assets\BigBlue_Terminal_v1.0\BigBlue_Terminal_437TT.TTF"
         self.font = pygame.font.Font(self.font_path,30)
 
-    def mc_room_logic(self, screen):
+    def mc_room_logic(self, screen, interesed):
         mc_image = self.mc_image
         mc_rect = self.mc_rect
         approaching_door = None
@@ -73,11 +73,14 @@ class MCroom:
                 mc_rect.y += 1
 
         if mc_rect.colliderect(door1_rect):
-            approaching_door = "door1"
+            if interesed[0] == 0:
+                approaching_door = "door1"
         elif mc_rect.colliderect(door2_rect):
-            approaching_door = "door2"
+            if interesed[1] == 0:
+                approaching_door = "door2"
         elif mc_rect.colliderect(door3_rect):
-            approaching_door = "door3"
+            if interesed[2] == 0:
+                approaching_door = "door3"
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
