@@ -3,7 +3,7 @@ import pygame
 class IntroScreen:
     def __init__(self, screen):
         self.screen = screen
-        self.font_path = r"MemoryGame\assets\BigBlue_Terminal_v1.0\BigBlue_Terminal_437TT.TTF"
+        self.font_path = r"MemoryGame/assets/BigBlue_Terminal_v1.0/BigBlue_Terminal_437TT.TTF"
         self.font = pygame.font.Font(self.font_path,30)
         self.text1 = '''Hello, you are an astronaut.'''
         self.text2 = '''You are on a mission to save the world.'''
@@ -44,7 +44,7 @@ class MCroom:
     def __init__(self):
         self.mc_image = pygame.image.load("MCroom/mc.png")
         self.mc_rect = self.mc_image.get_rect(topleft=(100, 300))  
-        self.font_path = r"MemoryGame\assets\BigBlue_Terminal_v1.0\BigBlue_Terminal_437TT.TTF"
+        self.font_path = "MemoryGame/assets/BigBlue_Terminal_v1.0/BigBlue_Terminal_437TT.TTF"
         self.font = pygame.font.Font(self.font_path,30)
 
     def mc_room_logic(self, screen, interesed):

@@ -4,7 +4,7 @@ class FinalScreen:
     def __init__(self, screen):
         self.screen = screen
         self.running = True
-        self.font_path = "BigBlue_Terminal_437TT.ttf"  # Replace with the actual path to your .ttf font file
+        self.font_path = "BigBlue_Terminal_437TT.TTF"  # Replace with the actual path to your .ttf font file
         self.font = pygame.font.Font(self.font_path, 60)
         self.small_font = pygame.font.Font(self.font_path, 30)
 

@@ -135,7 +135,7 @@ class Card:
         
         # Load the corresponding image based on the card value
         # Ensure the image extension matches the actual image type (webp or jpg)
-        self.image = pygame.image.load(r'MemoryGame\assets\{}.jpg'.format(value+1))  # Using .jpg format
+        self.image = pygame.image.load(r'MemoryGame/assets/{}.jpg'.format(value+1))  # Using .jpg format
         self.image = pygame.transform.scale(self.image, (width, height))  # Scale to card size
         self.rect = pygame.Rect(x, y, width, height)
 
@@ -159,7 +159,7 @@ class MemoryGameScreen:
     def __init__(self, screen):
         self.screen = screen
         self.memory_game = MemoryGame(screen)
-        self.font_path = r"MemoryGame\assets\BigBlue_Terminal_v1.0\BigBlue_Terminal_437TT.TTF"
+        self.font_path = r"MemoryGame/assets/BigBlue_Terminal_v1.0/BigBlue_Terminal_437TT.TTF"
         self.font = pygame.font.Font(self.font_path, 40)
         self.text1 = self.font.render("Congratulations !!", True, (255, 255, 255))
         self.text2 = self.font.render("You are now sane :)", True, (255, 255, 255))

@@ -22,9 +22,8 @@ class ConnectTheWiresGame:
         self.COLORS = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 165, 0)]  # Red, Green, Blue, Yellow, Orange
 
         # Load custom font
-        self.font_path = "BigBlue_Terminal_437TT.ttf"  # Replace with the actual path to your .ttf font file
+        self.font_path = "BigBlue_Terminal_437TT.TTF"  # Replace with the actual path to your .ttf font file
 
-        # Fonts
         self.header_font = pygame.font.Font(self.font_path, 48)  # Custom font for header
         self.success_font = pygame.font.Font(self.font_path, 36)  # Custom font for success message
 
