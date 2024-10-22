@@ -6,7 +6,7 @@ class Pong:
         self.running = True
         self.player_score = 0
         self.computer_score = 0
-        self.font_path = "BigBlue_Terminal_437TT.ttf"  # Adjust this path as needed
+        self.font_path = "BigBlue_Terminal_437TT.TTF"  # Adjust this path as needed
         self.font = pygame.font.Font(self.font_path, 40)  # Change the size from 74 to 40
         self.setup_game()
 

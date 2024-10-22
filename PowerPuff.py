@@ -17,7 +17,7 @@ pygame.display.set_caption("PowerPuff")
 # Create an instance of MCroom
 mc = m.MCroom()
 intro = m.IntroScreen(screen)
-font_path = r"MemoryGame\assets\BigBlue_Terminal_v1.0\BigBlue_Terminal_437TT.TTF"
+font_path = "MemoryGame/assets/BigBlue_Terminal_v1.0/BigBlue_Terminal_437TT.TTF"
 font = pygame.font.Font(font_path,30)
 
 running = intro.show_intro()
